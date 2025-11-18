@@ -23,13 +23,13 @@ The output of this command will look something like this (this is an example):
 ```
 CONTAINER ID   IMAGE   ...   PORTS      NAMES
 ...
-9a68244fd673   ...     ...   3000/tcp   swc4o40o88w4ogwkws8wgsg0-070818606214
-d80b0cc9440b   ...     ...   3000/tcp   pckwsowwkco0ok8s808ksog8-070454034323
+9a68244fd673   ...     ...   3000/tcp   suj4o40o75w4ogwkws8wgsg0-070817526214
+d80b0cc9440b   ...     ...   3000/tcp   pckwsowwkconnhs808ksog8-070454hgn3323
 ...
 ```
 
 From this output, you need two pieces of information:
-*   **Container Names**: `swc4o40o88w4ogwkws8wgsg0-070818606214` and `pckwsowwkco0ok8s808ksog8-070454034323`
+*   **Container Names**: `suj4o40o75w4ogwkws8wgsg0-070817526214` and `pckwsowwkconnhs808ksog8-070454hgn3323`
 *   **Internal Port**: `3000` (The `PORTS` column shows that this port is not mapped to the host and is internal).
 
 ### Step 2: Configure DNS in Cloudflare
@@ -66,7 +66,7 @@ http:
         - https
       service: lb-https
       # >>> Enter your domain here
-      rule: Host(`test.meditechx.net`)
+      rule: Host(`test.domain.com`)
     lb-http:
       middlewares:
         - redirect-to-https
@@ -74,14 +74,14 @@ http:
         - http
       service: noop
       # >>> Enter your domain here
-      rule: Host(`test.meditechx.net`)
+      rule: Host(`test.domain.com`)
   services:
     lb-https:
       loadBalancer:
         servers:
           # >>> Enter your container names and internal port here
-          - url: 'http://swc4o40o88w4ogwkws8wgsg0-070818606214:3000'
-          - url: 'http://pckwsowwkco0ok8s808ksog8-070454034323:3000'
+          - url: 'http:/suj4o40o75w4ogwkws8wgsg0-070817526214:3000'
+          - url: 'http://pckwsowwkconnhs808ksog8-070454hgn3323:3000'
     noop:
       loadBalancer:
         servers:
@@ -100,8 +100,8 @@ The easiest way is to check the logs of your application containers.
 2.  Then, check the logs of each container separately:
 
     ```bash
-    docker logs swc4o40o88w4ogwkws8wgsg0-070818606214
-    docker logs pckwsowwkco0ok8s808ksog8-070454034323
+    docker logs suj4o40o75w4ogwkws8wgsg0-070817526214
+    docker logs pckwsowwkconnhs808ksog8-070454hgn3323
     ```
 
     If everything is configured correctly, you will see that the requests have been distributed between the two containers.
